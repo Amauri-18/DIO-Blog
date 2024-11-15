@@ -1,7 +1,5 @@
 import { getGlobalData } from '../../utils/global-data';
-import {
-  getPostBySlug,
-} from '../../utils/mdx-utils';
+import { getPostBySlug } from '../../utils/mdx-utils'; 
 
 import { MDXRemote } from 'next-mdx-remote';
 import Head from 'next/head';
@@ -13,24 +11,29 @@ import Header from '../../components/Header';
 import Layout, { GradientBackground } from '../../components/Layout';
 import SEO from '../../components/SEO';
 
-
 const components = {
   a: CustomLink,
   Head,
 };
 
-export default function PostPage({
-  posts,
-  globalData,
-}) {
+export default function PostPage({ posts, globalData }) {
+
   return (
     <Layout>
+      
+      {/* {posts && (     
+        <>
+          <p>{posts.title}</p>
+          <p>TESTE</p>
+        </>
+      )} */}
+
       <SEO
         title={`${posts.title} - ${globalData.name}`}
         description={posts.description}
       />
       <Header name={globalData.name} />
-      <article className="px-6 md:px-0">
+      <article className="px-6 md:px-0 bg-gray-400 rounded-md p-5 ">
         <header>
           <h1 className="text-3xl md:text-5xl dark:text-white text-center mb-12">
             {posts?.title}
@@ -61,13 +64,9 @@ export default function PostPage({
 export const getServerSideProps = async ({ params }) => {
   const globalData = getGlobalData();
   const posts = await getPostBySlug(params.id);
- 
 
-  return {
-    props: {
-      globalData,
-      posts,
-    },
-  };
-};
+  return { props: {globalData, posts }}
+}
+      
+    
 
